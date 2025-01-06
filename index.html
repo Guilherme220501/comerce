@@ -1,369 +1,411 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="Pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-commerce de Materiais de Construção</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh; /* Garante que o corpo ocupe toda a altura da janela */
-            padding-bottom: 100px; /* Espaço extra para o rodapé */
-        }
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-        }
-        #search-bar {
-            margin: 20px auto;
-            width: 90%;
-            max-width: 600px;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            display: block;
-            text-align: center;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 20px;
-        }
-        @media (max-width: 768px) {
-    .produto {
-        flex: 1 1 calc(50% - 10px); /* 2 produtos por linha em telas médias */
-    }
-}
-        .product {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            width: 30%;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
-            flex: 1 1 calc(33.33% - 20px);box-sizing: border-box;min-width: 250px; 
-            text-align: center;
-            cursor: grab;
-        }
-        .product:hover {
-            transform: scale(1.06);
-            transition: ease s;
-        }
-        .product img {
-            width: 100%;height: 200px;object-fit: contain; }
-        .product-info {
-            padding: 20px;
-        }
-        .product-info h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            padding: 0px;
-        }
-        .product-info p {
-            color: #666;
-            margin-bottom: 10px;
-            padding: 3px;
-        }
-        .product-info .price {
-            font-size: 22px;
-            font-weight: bold;
-            color: red;
-            margin-bottom: 20px;
-        }
-        .add-to-cart {
-            background-color: blue;
-            color: white;
-            border: none;
-            padding: 10px;
-            width: 100%;
-            cursor: pointer;
-            font-size: 16px;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            font-style: oblique;
-            transition: background-color 0.3s ease;
-            border-radius: 10px 10px;
-        }
-        .add-to-cart:hover {
-            background-color: #d35400;
-        }
-        .cart {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            width: 250px;
-            display: none; /* Inicialmente oculto */
-            transition: transform 0.3s ease;
-            white-space: nowrap;
-        }
-        @media (max-width: 768px) {
-    img {
-        width: 100%;
-        height: auto;
-    }
-}
-
-        .cart.open {
-            display: block;
-            transform: translateX(0);
-        }
-        .cart h3 {
-            margin-bottom: 10px;
-        }
-        .cart ul {
-            list-style: none;
-            margin-bottom: 10px;
-            padding-left: 0;
-            
-        }
-        .cart ul li {
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .cart button {
-            background-color: #27ae60;
-            color: white;
-            padding: 10px;
-            border: none;
-            width: 100%;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 10px 10px;
-        }
-        .cart button:hover {
-            background-color: #2ecc71;
-        }
-        .cart .remove {
-            color: #e74c3c;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .view-cart-btn {
-            background-color: #3498db;
-            color: white;
-            padding: 10px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 20px;
-            width: 100%;
-        }
-        .view-cart-btn:hover {
-            background-color: #2980b9;
-        }
-
-        /* Estilo para o link Remover */
-.remove-option {
-    color: #e74c3c;
-    cursor: pointer;
-    font-size: 14px;
-    text-decoration: underline;
-
-}
-
-.remove-option:hover {
-    color: #c0392b;
-}
-
-        /* Rodapé */
-        footer {
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
-            width: 100%;
-            text-align: center;
-            margin-top: auto; /* Garante que o rodapé vá para o final da página */
-        }
-        footer h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        footer p {
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-        footer a {
-            color: #ecf0f1;
-            text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <title>Oliveira Materiais</title>
 </head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        padding-bottom: 100px;
+    }
+    header {
+        background-color:darkblue;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    #search-bar {
+        margin: 20px auto;
+        width: 90%;
+        border-radius: 10px 10px;
+        max-width: 600px;
+        padding: 10px;
+        font-size: 16px;
+        border: 3px solid #ccc;
+        display: block;
+        text-align: left;
+        font-style: normal;
+        color: black;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 10px;
+    }
+    .product {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        width: 30%;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease;
+        flex: 1 1 calc(33.33% - 20px);
+        text-align: center;
+        cursor: grab;
+    }
+    .product:hover {
+        transform: scale(1.06);
+    }
+    .product img {
+        width: 100%;
+        height: 200px;
+        object-fit: contain;
+    }
+    .product-info {
+        padding: 20px;
+    }
+    .product-info h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    .product-info p {
+        color: #666;
+        margin-bottom: 10px;
+    }
+    /* Estilo para a quantidade de estoque */
+.estoque {
+font-weight: bold;
+}
+
+.estoque.altos {
+color: green;  /* Cor verde para estoque alto */
+ }
+
+.estoque.medio {
+color: orange;  /* Cor laranja para estoque médio */
+ }
+
+  .estoque.baixo {
+ color: red;  /* Cor vermelha para estoque baixo */
+  }
+
+  .estoque.esgotado {
+   color: gray; 
+   }
+
+    .product-info .price {
+        font-size: 22px;
+        font-weight: bold;
+        color: red;
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+    .add-to-cart {
+        background-color:blue;
+        color: white;
+        border: none;
+        padding: 10px;
+        width: 100%;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 10px 10px;
+    }
+    .add-to-cart:hover {
+        background-color: #d35400;
+    }
+    .cart {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: white;
+        border-radius: 10px 10px;
+        color: black;
+        padding: 20px;
+        border-radius: 10px;
+        width: 250px;
+        display: none;
+        transition: transform 0.3s ease;
+    }
+    .cart.open {
+        display: block;
+        transform: translateX(0);
+    }
+    .cart h3 {
+        margin-bottom: 10px;
+        color: red;
+        font-size: 20px;
+        font-style: oblique;
+    }
+    .cart ul {
+        list-style: none;
+        margin-bottom: 10px;
+        padding-left: 0;
+    }
+    .cart ul li {
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .cart ul li .price {
+        font-size: 16px;
+        font-weight: bold;
+        color: red;
+        margin-top: 5px;
+    }
+    .cart button {
+        background-color: #27ae60;
+        color: white;
+        padding: 10px;
+        border: none;
+        width: 100%;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 10px 10px;
+    }
+    .cart button:hover {
+        background-color: #2ecc71;
+    }
+    .view-cart-btn {
+        position: fixed; /* Fixado na tela */
+        top: 0px; /* Afastado 20px do topo */
+        left: 10px; /* Afastado 20px da esquerda */
+        background-color: darkblue;
+        border-radius: 10px 10px;
+        color: white;
+        padding: 0px;
+        border: 3px solid white;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+        z-index: 1000; /* Garante que o botão fique acima de outros elementos */
+    }
+    .view-cart-btn:hover {
+        background-color: #2980b9;
+    }
+
+    .remove-option {
+        color:black;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: underline;
+    }
+
+    footer {
+        background-color: #2c3e50;
+        color: white;
+        padding: 20px;
+        width: 100%;
+        text-align: center;
+        margin-top: auto;
+    }
+    .img:hover{transform: scale(1.07);}
+    .row{display: flex;flex-direction: row;align-items: center;justify-content: center;text-align: center;margin: auto;gap: 5px;padding: 10px;width: 200px;}
+    footer h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    footer p {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+    footer a {
+        color: #ecf0f1;
+        text-decoration: none;
+    }
+    footer a:hover {
+        text-decoration: underline;
+    }
+</style>
 <body>
-
-<header>
-    <h1>Oliveira Materiais</h1>
-</header>
-
-<input type="text" id="search-bar" placeholder="Pesquisar produtos..." onkeyup="searchProducts()" style="text-align: left;border-radius: 10px 10px;color: black;">
-
-<div class="container" id="product-container">
+    <header>
+        <h1>Oliveira Materiais</h1>
+    </header>
     
-</div>
-
-<!-- Botão para visualizar o carrinho -->
-<button class="view-cart-btn" onclick="toggleCart()">Ver Carrinho</button>
-
-<div class="cart" id="cart">
-    <h3>Carrinho</h3>
-    <ul id="cart-items">
+    <!-- Barra de pesquisa -->
+    <input type="text" id="search-bar" placeholder="Pesquisar produtos..." onkeyup="searchProducts()">
+    
+    <!-- Container de produtos -->
+    <div class="container" id="product-container">
+        <!-- Os produtos serão renderizados aqui -->
+    </div>
+    
+    <!-- Botão de Carrinho -->
+    <button class="view-cart-btn" onclick="toggleCart()">
+        <img src="carrinho.jpeg" alt="icon" width="40px" height="40px">
+    </button>
+    
+    <!-- Carrinho -->
+    <div class="cart" id="cart">
+        <h3>Carrinho <img src="carrinho.jpeg" alt="icon" style="height: 40px;width: 30px;border-radius: 10px 10px;"></h3>
+        <ul id="cart-items">
+            <br>
+            <li>Nenhum item no carrinho</li>
+        </ul>
+        <p>Total: R$ <span id="cart-total">0.00</span></p>
         <br>
-        <li>Nenhum item no carrinho</li>
-    </ul>
-    <p>Total: R$ <span id="cart-total">0.00</span></p>
-    <br>
-    <button onclick="checkout()">Finalizar Compra</button>
-</div>
-
-<!-- Rodapé -->
-<footer>
-    <h3>Contato e Endereço</h3>
-    <p>Email: <a href="mailto:contato@materiaisconstrução.com">contato@materiaisconstrução.com</a></p>
-    <p>Endereço: Rua das Obras, 123, Bairro Centro, Cidade - Estado</p>
-    <p>Telefone: (11) 1234-5678</p>
-</footer>
-
-<script>
-    const products = [
-        { id: 1, name: 'Cimento 50kg', description: 'Cimento de alta resistência para construção.', price: 30, image: 'cimento.webp' },
-        { id: 2, name: 'Tijolo Maciço', description: 'Tijolos para construção de paredes e fundações.', price: 2.5, image: 'OIP.jpeg' },
-        { id: 3, name: 'Areia Fina', description: 'Areia limpa e de excelente qualidade para construção.', price: 7, image: 'areia.webp' },
-        { id: 4, name: 'Pedra Brita', description: 'Pedra britada para fundações e concreto.', price: 8, image: 'pedra.webp' },
-        { id: 5, name: 'Tinta Acrílica', description: 'Tinta para pintura de superfícies internas e externas.', price: 45, image: 'tinta.webp' },
-        { id: 6, name: 'Telhas', description: 'As telhas de barro oferecem escolha atrativa para coberturas residenciais e comerciais', price: 10, image: 'telhas.jpg' },
-        { id: 7 , name: 'Argamassa', description: 'Utilizada na construção civil para unir elementos como tijolos e blocos.', price:10, image:'argamassa.jpg'},
-        { id:8, name:'tubo 4 Polegadas 100mm', description:'Utilizada no esgoto',price:15,image:'tubo4.webp'},
-        {id:9, name:'Cimento cola',description:'é um tipo especializado de argamassa usado principalmente para fixar azulejos',price:15,image:'cimentocola.webp'},
-    ];
-
-    let cart = [];
-
-    // Função para renderizar os produtos
-    function renderProducts(filteredProducts) {
-        const container = document.getElementById('product-container');
-        container.innerHTML = '';
-
-        filteredProducts.forEach(product => {
-            const productElement = document.createElement('div');
-            productElement.classList.add('product');
-            productElement.innerHTML = `
-                <img src="${product.image}" alt="${product.name}">
-                <div class="product-info">
-                    <h3>${product.name}</h3>
-                    <p>${product.description}</p>
-                    <p class="price">R$ ${product.price.toFixed(2)}</p>
-                    <button class="add-to-cart" onclick="addToCart('${product.name}', ${product.price})">Adicionar ao carrinho</button>
-                </div>
-            `;
-            container.appendChild(productElement);
-        });
-    }
-
-    // Função de adicionar ao carrinho
-    function addToCart(productName, price) {
-        const product = { name: productName, price: price };
-        cart.push(product);
-        updateCartUI();
-        showCart();
-    }
-
-    // Função de atualização da interface do carrinho
-    function updateCartUI() {
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartTotal = document.getElementById('cart-total');
-        cartItemsContainer.innerHTML = '';
-
-        if (cart.length === 0) {
-            cartItemsContainer.innerHTML = '<li>Nenhum item no carrinho</li>';
-        } else {
-            let total = 0;
-            cart.forEach((item, index) => {
-                const li = document.createElement('li');
-                li.innerHTML = `${item.name} - R$ ${item.price.toFixed(2)} <span class="remove" onclick="removeFromCart(${index})">Remover</span>`;
-                cartItemsContainer.appendChild(li);
-                total += item.price;
-            });
+        <button id="checkout-btn" onclick="checkout()" style="display: none;">Finalizar Compra</button>
+    </div>
+    
+    <!-- Rodapé -->
+    <footer>
+        <h3>Endereço</h3>
+        <p>Av Rio das Pedras Nª4100</p>
+        <br>
+        <h3>Entre em Contato</h3>
+        <div class="row">
+            <div class="img">
+                <p><img src="gmail.jpeg" alt="icon" style="width: 40px;height: 30px;cursor:pointer;border-radius: 10px 10px;"><a href="https://guilherme8876sk@gmail.com">Gmail</a></p>
+            </div>    
+            <div class="img">
+                <p><img src="whatsapp.png" alt="icon" style="width: 40px;height: 30px;cursor:pointer;border-radius: 10px 10px;"><a href="https:/wa.me/11983417590">Whatsapp</a></p>
+            </div>
+            <div class="img">
+                <p><img src="telefone.jpeg" alt="icon" style="width: 40px;height: 30px;cursor:pointer;border-radius: 10px 10px;"><a href="#">Telefone</a></p>
+            </div>
+        </div>
+        <br>
+        <p>&copy; 2025 Oliveira Materiais. Todos os direitos reservados.</p>
+    </footer>
+    
+    <script>
+        // Array de produtos
+        const products = [
+            { id: 1, name: 'Cimento 50kg', description: 'Cimento de alta resistência para construção.', price: 30, image: 'cimento.webp', estoque: 20 },
+            { id: 2, name: 'Tijolo Maciço', description: 'Tijolos para construção de paredes e fundações.', price: 2.5, image: 'OIP.jpeg', estoque: 100 },
+            { id: 3, name: 'Areia Fina', description: 'Areia limpa e de excelente qualidade para construção.', price: 7, image: 'areia.webp', estoque: 60 },
+            { id: 4, name: 'Pedra Brita', description: 'Pedra britada para fundações e concreto.', price: 8, image: 'pedra.webp', estoque: 70 },
+            { id: 5, name: 'Tinta Acrílica', description: 'Tinta para pintura de superfícies internas e externas.', price: 45, image: 'tinta.webp', estoque: 100 },
+            { id: 6, name: 'Telhas', description: 'As telhas de barro oferecem escolha atrativa para coberturas residenciais e comerciais', price: 10, image: 'telhas.jpg', estoque: 200 },
+            { id: 7, name: 'Argamassa', description: 'Usada em Ajulejos', price: 12, image: 'argamassa.jpg', estoque: 30 },
+            { id: 8, name: 'Tubo 4 Polegadas 100mm', description: 'Utilizada no esgoto', price: 15, image: 'tubo4.webp', estoque: 100 },
+            { id: 9, name: 'Cimento cola', description: 'É um tipo especializado de argamassa usado principalmente para fixar azulejos', price: 15, image: 'cimentocola.webp', estoque: 60 },
+        ];
+    
+        let cart = [];
+    
+        // Funções de carrinho, pesquisa e renderização dos produtos
+        function addToCart(productId, productName, price) {
+            const product = products.find(item => item.id === productId);
+    
+            if (product.estoque <= 0) {
+                alert(`Não há mais estoque de ${productName}`);
+                return;
+            }
+    
+            const existingProduct = cart.find(item => item.id === productId);
+    
+            if (existingProduct) {
+                existingProduct.quantity++;
+            } else {
+                cart.push({ id: productId, name: productName, price: price, quantity: 1 });
+            }
+    
+            product.estoque--;
+            updateCart();
+            renderProducts(products);
+        }
+    
+        function removeFromCart(productId) {
+            const productInCart = cart.find(item => item.id === productId);
+            const product = products.find(item => item.id === productId);
+    
+            if (productInCart) {
+                if (productInCart.quantity > 1) {
+                    productInCart.quantity--;
+                } else {
+                    cart = cart.filter(item => item.id !== productId);
+                }
+    
+                product.estoque++;
+                updateCart();
+                renderProducts(products);
+            }
+        }
+    
+        function updateCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            cartItemsContainer.innerHTML = '';
+    
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<li>Nenhum item no carrinho</li>';
+                document.getElementById('checkout-btn').style.display = 'none'; // Esconde o botão se o carrinho estiver vazio
+            } else {
+                cart.forEach(item => {
+                    const cartItemElement = document.createElement('li');
+                    cartItemElement.innerHTML = `
+                        <span>${item.name} ${item.quantity > 1 ? `${item.quantity}x` : ''}</span>
+                        <span class="price">R$ ${(item.price * item.quantity).toFixed(2)}</span>
+                        <span class="remove-option" onclick="removeFromCart(${item.id})">Remover</span>
+                    `;
+                    cartItemsContainer.appendChild(cartItemElement);
+                });
+                document.getElementById('checkout-btn').style.display = 'inline'; // Exibe o botão quando houver itens no carrinho
+            }
+    
+            const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
             cartTotal.textContent = total.toFixed(2);
         }
-    }
-
-    // Função para remover itens do carrinho
-    function removeFromCart(index) {
-        cart.splice(index, 1);
-        updateCartUI();
-        if (cart.length === 0) {
-            hideCart();
+    
+        function toggleCart() {
+            const cartContainer = document.getElementById('cart');
+            cartContainer.classList.toggle('open');
         }
-    }
-
-    // Função para exibir ou ocultar o carrinho
-    function toggleCart() {
-        const cartElement = document.getElementById('cart');
-        cartElement.classList.toggle('open');
-    }
-
-    // Função para mostrar o carrinho automaticamente após adicionar um item
-    function showCart() {
-        const cartElement = document.getElementById('cart');
-        cartElement.classList.add('open');
-    }
-
-    // Função para finalizar a compra
-    function checkout() {
-        if (cart.length === 0) {
-            alert("Carrinho vazio! Adicione itens para comprar.");
-            return;
+    
+        function searchProducts() {
+            const query = document.getElementById('search-bar').value.toLowerCase();
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(query) || 
+                product.description.toLowerCase().includes(query)
+            );
+            renderProducts(filteredProducts);
         }
-        let total = cart.reduce((acc, item) => acc + item.price, 0);
-        alert(`Compra finalizada! Total: R$ ${total.toFixed(2)}`);
-        cart = [];
-        updateCartUI();
-        hideCart();
-    }
-
-    // Função para ocultar o carrinho
-    function hideCart() {
-        const cartElement = document.getElementById('cart');
-        cartElement.classList.remove('open');
-    }
-
-    // Função de pesquisa de produtos
-    function searchProducts() {
-        const searchTerm = document.getElementById('search-bar').value.toLowerCase();
-        const filteredProducts = products.filter(product => 
-            product.name.toLowerCase().includes(searchTerm) || 
-            product.description.toLowerCase().includes(searchTerm)
-        );
-        renderProducts(filteredProducts);
-    }
-
-    // Inicializa a página com todos os produtos
-    renderProducts(products);
-</script>
-
+    
+        function renderProducts(filteredProducts) {
+            const container = document.getElementById('product-container');
+            container.innerHTML = '';
+    
+            filteredProducts.forEach(product => {
+                let estoqueClass = 'estoque';
+    
+                // Aplicando a classe de estoque de acordo com a quantidade disponível
+                if (product.estoque === 0) {
+                    estoqueClass += ' esgotado';  // Se o estoque for zero
+                } else if (product.estoque <= 10) {
+                    estoqueClass += ' baixo';  // Se o estoque for baixo (10 ou menos)
+                } else if (product.estoque <= 50) {
+                    estoqueClass += ' medio';  // Se o estoque for médio (até 50)
+                } else {
+                    estoqueClass += ' altos';  // Se o estoque for alto (mais de 50)
+                }
+    
+                const productElement = document.createElement('div');
+                productElement.classList.add('product');
+                productElement.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <p class="${estoqueClass}">Estoque: ${product.estoque}</p>
+                        <p class="price">R$ ${product.price.toFixed(2)}</p>
+                        <button class="add-to-cart" onclick="addToCart(${product.id}, '${product.name}', ${product.price})" ${product.estoque <= 0 ? 'disabled' : ''}>Adicionar ao carrinho</button>
+                    </div>
+                `;
+                container.appendChild(productElement);
+            });
+        }
+    
+        // Inicializa a renderização dos produtos
+        renderProducts(products);
+    </script>
+    
 </body>
 </html>
-
-
