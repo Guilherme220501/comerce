@@ -559,11 +559,17 @@ color: orange;  /* Cor laranja para estoque médio */
         renderProducts(products);
 
         // Função para finalizar a compra
+    // Função de finalizar a compra
 function checkout() {
     if (cart.length === 0) {
         alert('Seu carrinho está vazio! Adicione itens para continuar.');
         return;
     }
+
+    // Redireciona para o formulário de pagamento
+    openPaymentForm();
+}
+
 
     // Simulando a aprovação do pagamento
     const paymentApproved = true;  // Aqui você pode integrar com um sistema de pagamento real
@@ -579,7 +585,23 @@ function checkout() {
         // Caso o pagamento falhe
         alert('Erro no pagamento. Tente novamente.');
     }
+
+// Função de finalizar a compra
+function openPaymentForm() {
+    // Verifica se o carrinho não está vazio
+    if (cart.length === 0) {
+        alert('Seu carrinho está vazio! Adicione itens para continuar.');
+        return;
+    }
+
+    // Armazena o carrinho e o total no localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('cartTotal', JSON.stringify(cart.reduce((acc, item) => acc + item.price * item.quantity, 0)));
+
+    // Redireciona para o formulário de pagamento
+    window.location.href = 'formpagamento.html';  // Substitua o caminho se necessário
 }
+
 
     </script>
     
