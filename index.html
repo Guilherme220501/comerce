@@ -54,14 +54,13 @@
     display: flex;
     align-items: center;
     position: relative;
-    height: auto;
     width: calc(33.33% - 20px);
     padding: 15px;
     transition: transform 0.3s ease;
 }
 
 .product img {
-    width: 150px;
+    width: 100px;
     height: auto;
     margin-right: 15px;
     border-radius: 5px;
@@ -70,6 +69,35 @@
 
 .product .description {
     text-align: left;
+}
+
+.product h2 {
+    font-size: 1.2em;
+    margin: 5px 0;
+}
+
+.product p {
+    margin: 3px 0;
+}
+
+.product:hover {
+    transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+    .product {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .product img {
+        width: 80px;
+        margin-right: 10px;
+    }
+
+    .product .description {
+        text-align: left;
+    }
 }
 
 .product h2 {
