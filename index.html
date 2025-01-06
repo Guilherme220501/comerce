@@ -46,6 +46,7 @@
         justify-content: center;
         gap: 20px;
         padding: 30px;
+
     }
     .product {
         background-color: white;
@@ -62,9 +63,12 @@
         transform: scale(1.06);
     }
     .product img {
-        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         height: 200px;
-        object-fit: contain;
+        overflow: hidden;
+        position: relative;
     }
     .product-info {
         padding: 20px;
