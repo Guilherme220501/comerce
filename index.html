@@ -51,7 +51,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 10px;
-    display: flex; /* Alinha imagem e descrição horizontalmente */
+    display: flex; /* Layout horizontal por padrão */
     align-items: center; /* Centraliza verticalmente */
     position: relative;
     height: auto; /* Altura ajustável */
@@ -61,7 +61,7 @@
 }
 
 .product img {
-    width: 150px; /* Tamanho fixo da imagem */
+    width: 140px; /* Tamanho fixo da imagem */
     height: auto; /* Mantém proporção */
     margin-right: 15px; /* Espaço entre a imagem e a descrição */
     border-radius: 5px;
@@ -72,6 +72,38 @@
     text-align: left; /* Alinha o texto à esquerda */
 }
 
+.product h2 {
+    font-size: 1.2em;
+    margin: 5px 0;
+}
+
+.product p {
+    margin: 3px 0;
+}
+
+.product:hover {
+    transform: scale(1.05); /* Leve aumento no hover */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 600px) {
+    .product {
+        flex-direction: column; /* Muda para layout vertical */
+        width: 100%; /* Ocupa a largura total */
+        text-align: center; /* Centraliza o conteúdo na tela */
+    }
+
+    .product img {
+        margin-right: 0; /* Remove o espaço lateral */
+        margin-bottom: 10px; /* Adiciona espaço abaixo da imagem */
+        width: 50%; /* Ajusta o tamanho da imagem para telas pequenas */
+        
+    }
+
+    .product .description {
+        text-align: center; /* Centraliza o texto */
+    }
+}
 .product h2 {
     font-size: 1.2em;
     margin: 5px 0;
