@@ -594,13 +594,14 @@ function openPaymentForm() {
         return;
     }
 
-    // Armazena o carrinho e o total no localStorage
+    // Armazenar os produtos do carrinho e o total no localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
     localStorage.setItem('cartTotal', JSON.stringify(cart.reduce((acc, item) => acc + item.price * item.quantity, 0)));
 
-    // Redireciona para o formulário de pagamento
-    window.location.href = 'formpagamento.html';  // Substitua o caminho se necessário
+    // Redirecionar para o formulário de pagamento
+    window.location.href = 'formpagamento.html';  // Substitua pelo caminho correto
 }
+
 
 
     </script>

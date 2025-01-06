@@ -7,200 +7,113 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        header {
-            background-color: #007bff;
-            color: #fff;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .container {
-            width: 80%;
-            margin: 0 auto;
             padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-            border-radius: 8px;
         }
-
-        h2 {
-            text-align: center;
+        .product-list {
             margin-bottom: 20px;
         }
-
-        .cart-summary {
-            margin-bottom: 30px;
+        .product-list ul {
+            list-style-type: none;
+            padding: 0;
         }
-
-        .cart-summary h3 {
+        .product-list li {
             margin-bottom: 10px;
         }
-
-        .cart-items {
-            list-style: none;
-            padding: 0;
-        }
-
-        .cart-items li {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .cart-items li:last-child {
-            border-bottom: none;
-        }
-
-        .total-price {
-            text-align: right;
-            font-size: 18px;
+        .price {
             font-weight: bold;
-            margin-top: 10px;
         }
-
-        .payment-methods {
+        #payment-form {
             margin-top: 20px;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        .payment-method {
-            padding: 15px;
-            background-color: #28a745;
-            color: #fff;
-            text-align: center;
-            border-radius: 8px;
-            width: 48%;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .payment-method:hover {
-            background-color: #218838;
-        }
-
-        .stripe-form {
-            display: flex;
-            flex-direction: column;
-            margin-top: 20px;
-        }
-
-        #card-element {
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 4px;
-        }
-
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Finalize seu pagamento</h1>
-</header>
+    <h2>Resumo da Compra</h2>
 
-<div class="container">
-    <h2>Resumo da compra</h2>
-
-    <div class="cart-summary">
+    <div class="product-list">
         <h3>Itens no carrinho:</h3>
-        <ul class="cart-items" id="cart-items">
-            <!-- Itens do carrinho serão inseridos aqui -->
+        <ul id="cart-items">
+            <!-- Itens do carrinho serão carregados aqui -->
         </ul>
-
-        <p class="total-price">Total: R$ <span id="total-price">0.00</span></p>
+        <p id="cart-total">Total: R$ 0.00</p>
     </div>
 
-    <div class="payment-methods">
-        <div class="payment-method" id="payment-card">
-            <h4>Pagamento com Cartão</h4>
-            <p>Use seu cartão de crédito ou débito.</p>
+    <h2>Escolha sua forma de pagamento</h2>
+    <form id="payment-form">
+        <div id="card-element">
+            <!-- Stripe Card Element será inserido aqui -->
         </div>
-        <div class="payment-method" id="payment-pix">
-            <h4>Pagamento via Pix</h4>
-            <p>Faça o pagamento via Pix, usando o QR Code.</p>
-        </div>
+
+        <button type="submit">Pagar com Cartão de Crédito</button>
+    </form>
+
+    <h3>Ou pague via PIX</h3>
+    <button id="pay-pix" style="margin-top: 10px;">Pagar com PIX</button>
+    <div id="pix-info" style="display: none;">
+        <p>Faça o pagamento para o e-mail: <strong>guilherme8876sk@gmail.com</strong></p>
+        <p><em>Após realizar o pagamento, envie o comprovante para confirmação.</em></p>
     </div>
 
-    <div class="stripe-form" id="stripe-form" style="display: none;">
-        <form id="payment-form">
-            <div id="card-element">
-                <!-- Stripe Card Element será inserido aqui -->
-            </div>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        const stripe = Stripe('pk_live_51...');  // Substitua pela sua chave pública real
+        const elements = stripe.elements();
+        const card = elements.create('card'); // Cria o campo para o cartão de crédito
+        card.mount('#card-element'); // Insere o campo no DOM
 
-            <button type="submit">Pagar com Cartão</button>
-        </form>
-    </div>
+        // Recupera o carrinho do localStorage
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartTotal = JSON.parse(localStorage.getItem('cartTotal')) || 0;
 
-    <div id="pix-form" style="display: none;">
-        <p>Escaneie o QR Code abaixo para pagar via Pix:</p>
-        <img src="https://www.example.com/pix-qr-code.png" alt="QR Code Pix" />
-        <p><strong>Valor a ser pago: R$ <span id="pix-total-price">0.00</span></strong></p>
-        <button onclick="confirmPixPayment()">Confirmar Pagamento via Pix</button>
-    </div>
-</div>
+        // Exibe os itens do carrinho no formulário
+        const cartItemsContainer = document.getElementById('cart-items');
+        cart.forEach(item => {
+            const cartItemElement = document.createElement('li');
+            cartItemElement.innerHTML = `${item.name} - ${item.quantity}x - R$ ${(item.price * item.quantity).toFixed(2)}`;
+            cartItemsContainer.appendChild(cartItemElement);
+        });
 
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-    // Chave pública da Stripe (modo de produção)
-    const stripe = Stripe('pk_live_51...');  // Substitua pela sua chave pública real
+        // Exibe o total no final
+        document.getElementById('cart-total').textContent = `Total: R$ ${cartTotal.toFixed(2)}`;
 
-    const elements = stripe.elements();
-    const card = elements.create('card'); // Cria o campo para o cartão de crédito
-    card.mount('#card-element'); // Insere o campo no DOM
+        const form = document.getElementById('payment-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Previne o comportamento padrão do formulário
 
-    const form = document.getElementById('payment-form');
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Previne o comportamento padrão do formulário
+            const {token, error} = await stripe.createToken(card); // Cria o token com o Stripe
 
-        const {token, error} = await stripe.createToken(card); // Cria o token com o Stripe
-
-        if (error) {
-            console.error(error); // Em caso de erro, loga no console
-            alert('Erro no pagamento!');
-        } else {
-            const response = await fetch('/pagamento', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    token: token,
-                    amount: 1000, // valor em centavos, por exemplo, R$10,00 = 1000
-                }),
-            });
-
-            const result = await response.json();
-            if (result.success) {
-                alert('Pagamento realizado com sucesso!');
+            if (error) {
+                console.error(error); // Em caso de erro, loga no console
+                alert('Erro no pagamento!');
             } else {
-                alert('Erro: ' + result.error);
-            }
-        }
-    });
-</script>
+                const response = await fetch('/pagamento', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        token: token,
+                        amount: cartTotal * 100, // valor em centavos
+                    }),
+                });
 
+                const result = await response.json();
+                if (result.success) {
+                    alert('Pagamento realizado com sucesso!');
+                } else {
+                    alert('Erro: ' + result.error);
+                }
+            }
+        });
+
+        // Função para exibir a opção de pagamento via PIX
+        document.getElementById('pay-pix').addEventListener('click', () => {
+            // Exibe as instruções para pagamento via PIX (chave de e-mail)
+            document.getElementById('pix-info').style.display = 'block';
+            alert("Pagamento via PIX selecionado! Use a chave de e-mail para fazer o pagamento.");
+        });
+    </script>
 
 </body>
 </html>
