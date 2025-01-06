@@ -63,12 +63,9 @@
         transform: scale(1.06);
     }
     .product img {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        width: 100%;
         height: 200px;
-        overflow: hidden;
-        position: relative;
+        object-fit: contain;
     }
     .product-info {
         padding: 20px;
@@ -225,7 +222,7 @@ color: orange;  /* Cor laranja para estoque médio */
     footer a:hover {
         text-decoration: underline;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 1000%) {
   img {
     max-width: 100%;
     height: auto;
