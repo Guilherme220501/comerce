@@ -488,56 +488,68 @@ color: orange;  /* Cor laranja para estoque médio */
 
 </style>
 <body>
+     <!-- Cabeçalho -->
     <header>
         <h1>Oliveira Materiais</h1>
     </header>
-    
-    <!-- Barra de pesquisa -->
+
+    <!-- Menu de Categorias -->
+    <div id="category-menu">
+        <button onclick="filterByCategory('Materiais')">Materiais</button>
+        <button onclick="filterByCategory('Ferramentas')">Ferramentas</button>
+        <button onclick="filterByCategory('Hidráulicas')">Hidráulicas</button>
+    </div>
+
+    <!-- Barra de Pesquisa -->
     <input type="text" id="search-bar" placeholder="Pesquisar produtos..." onkeyup="searchProducts()">
-    
-    <!-- Container de produtos -->
+
+    <!-- Contêiner de Produtos -->
     <div class="container" id="product-container">
         <!-- Os produtos serão renderizados aqui -->
     </div>
-    
-    <!-- Botão de Carrinho -->
+
+    <!-- Botão do Carrinho -->
     <button class="view-cart-btn" onclick="toggleCart()">
         <div class="img">
-        <img src="carrinho.jpeg" alt="icon" width="40px" max-width="100%"
-        height="auto">
+            <img src="carrinho.jpeg" alt="Carrinho" width="40px" max-width="100%" height="auto">
         </div>
     </button>
-    
+
     <!-- Carrinho -->
     <div class="cart" id="cart">
-        <h3>Carrinho <img src="carrinho.jpeg" alt="icon" style="height: 40px;width: 30px;border-radius: 10px 10px;"></h3>
+        <h3>Carrinho <img src="carrinho.jpeg" alt="Carrinho" style="height: 40px;width: 30px;border-radius: 10px;"></h3>
         <ul id="cart-items">
-            <br>
             <li>Nenhum item no carrinho</li>
         </ul>
         <p>Total: R$ <span id="cart-total">0.00</span></p>
-        <br>
         <button id="checkout-btn" onclick="checkout()" style="display: none;">Finalizar Compra</button>
     </div>
-    
+
     <!-- Rodapé -->
     <footer>
         <h3>Endereço</h3>
-        <p>Av Rio das Pedras Nª4100</p>
-        <br>
+        <p>Av Rio das Pedras Nº 4100</p>
         <h3>Entre em Contato</h3>
         <div class="row">
             <div class="img">
-                <p><img src="gmail.jpeg" alt="icon" style="width: 40px;height: 30px;cursor:pointer;border-radius: 10px 10px;"><a href="https://guilherme8876sk@gmail.com">Gmail</a></p>
+                <p>
+                    <img src="gmail.jpeg" alt="Gmail" style="width: 40px;height: 30px;cursor:pointer;border-radius: 10px;">
+                    <a href="mailto:guilherme8876sk@gmail.com">Gmail</a>
+                </p>
             </div>    
             <div class="img">
-                <p><img src="whatsapp.png" alt="icon" style="width: 40px;height: 30px;cursor:pointer;border-radius: 10px 10px;"><a href="https:/wa.me/11983417590">Whatsapp</a></p>
+                <p>
+                    <img src="whatsapp.png" alt="WhatsApp" style="width: 40px;height: 30px;cursor:pointer;border-radius: 10px;">
+                    <a href="https://wa.me/11983417590">WhatsApp</a>
+                </p>
             </div>
             <div class="img">
-                <p><img src="telefone.jpeg" alt="icon" style="width: 40px;height: 30px;cursor:pointer;border-radius: 10px 10px;"><a href="#">Telefone</a></p>
+                <p>
+                    <img src="telefone.jpeg" alt="Telefone" style="width: 40px;height: 30px;cursor:pointer;border-radius: 10px;">
+                    <a href="#">Telefone</a>
+                </p>
             </div>
         </div>
-        <br>
         <p>&copy; 2025 Oliveira Materiais. Todos os direitos reservados.</p>
     </footer>
     
