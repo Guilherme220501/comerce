@@ -41,20 +41,16 @@
     }
     .container {
     display: flex;
-    flex-direction: column;
-    width: 500px;
-    margin: auto;
-    gap: 7px;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 10px;
 }
 
 .product {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease;
-    flex: 1 1 calc(33.33% - 20px);
+    margin: 10px;
     text-align: center;
     cursor: grab;
     display: flex;
@@ -62,28 +58,38 @@
     align-items: center;
     position: relative;
     height: 300px;
-}
-
-.product:hover {
-    transform: scale(1.06);
+    width: calc(33.33% - 20px); /* 3 produtos por linha */
 }
 
 .product img {
-    width: 300px;
-    height: 200px;
-    object-fit: contain;
+    width: 100%;
+    max-width: 200px; /* Limita a largura das imagens */
+    height: auto;
+    object-fit: contain; /* Garante que a imagem se ajusta sem cortar */
+    
 }
 
-/* Responsividade para telas menores */
+.product:hover {
+    transform: scale(1.06);  /* Aumenta o tamanho da imagem quando passa o mouse */
+}
+
+/* Ajuste para telas menores */
 @media (max-width: 1024px) {
     .product {
-        flex: 1 1 calc(50% - 20px); /* 2 produtos por linha */
+        width: calc(50% - 20px); /* 2 produtos por linha */
+    }
+    .product img {
+        max-width: 180px;
     }
 }
 
+/* Ajuste para telas muito pequenas */
 @media (max-width: 600px) {
     .product {
-        flex: 1 1 100%; /* 1 produto por linha */
+        width: 100%; /* 1 produto por linha */
+    }
+    .product img {
+        max-width: 100px; /* Tamanho máximo reduzido em telas pequenas */
     }
 }
 
@@ -435,6 +441,30 @@ color: orange;  /* Cor laranja para estoque médio */
     
         // Inicializa a renderização dos produtos
         renderProducts(products);
+
+        // Função para finalizar a compra
+function checkout() {
+    if (cart.length === 0) {
+        alert('Seu carrinho está vazio! Adicione itens para continuar.');
+        return;
+    }
+
+    // Simulando a aprovação do pagamento
+    const paymentApproved = true;  // Aqui você pode integrar com um sistema de pagamento real
+
+    if (paymentApproved) {
+        // Exibindo alerta de pagamento aprovado
+        alert('Pagamento aprovado! Sua compra foi finalizada com sucesso.');
+
+        // Limpar o carrinho após pagamento aprovado
+        cart = [];
+        updateCart();  // Atualiza a visualização do carrinho
+    } else {
+        // Caso o pagamento falhe
+        alert('Erro no pagamento. Tente novamente.');
+    }
+}
+
     </script>
     
 </body>
