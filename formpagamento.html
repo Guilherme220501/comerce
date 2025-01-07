@@ -55,64 +55,165 @@
         <p><em>Após realizar o pagamento, envie o comprovante para confirmação.</em></p>
     </div>
 
-    <script src="https://js.stripe.com/v3/"></script>
-    <script>
-        const stripe = Stripe('pk_live_51...');  // Substitua pela sua chave pública real
-        const elements = stripe.elements();
-        const card = elements.create('card'); // Cria o campo para o cartão de crédito
-        card.mount('#card-element'); // Insere o campo no DOM
+    <script 
+// Array de produtos com categoria
+const products = [
+    { id: 1, name: 'Cimento 50kg', description: 'Cimento de alta resistência para construção.', price: 30, image: 'cimento.webp', estoque: 20, category: 'materiais' },
+    { id: 2, name: 'Tijolo Maciço', description: 'Tijolos para construção de paredes e fundações.', price: 2.5, image: 'OIP.jpeg', estoque: 100, category: 'materiais' },
+    { id: 3, name: 'Areia Fina', description: 'Areia limpa e de excelente qualidade para construção.', price: 7, image: 'areia.webp', estoque: 60, category: 'materiais' },
+    { id: 4, name: 'Pedra Brita', description: 'Pedra britada para fundações e concreto.', price: 8, image: 'pedra.webp', estoque: 70, category: 'materiais' },
+    { id: 5, name: 'Tinta Acrílica', description: 'Tinta para pintura de superfícies internas e externas.', price: 45, image: 'tinta.webp', estoque: 100, category: 'materiais' },
+    { id: 6, name: 'Telhas', description: 'As telhas de barro oferecem escolha atrativa para coberturas residenciais e comerciais', price: 10, image: 'telhas.jpg', estoque: 200, category: 'materiais' },
+    { id: 7, name: 'Argamassa', description: 'Usada em Ajulejos', price: 12, image: 'argamassa.jpg', estoque: 30, category: 'materiais' },
+    { id: 8, name: 'Tubo 4 Polegadas 100mm', description: 'Utilizada no esgoto', price: 15, image: 'tubo4.webp', estoque: 100, category: 'hidraulicas' },
+    { id: 9, name: 'Cimento cola', description: 'É um tipo especializado de argamassa usado principalmente para fixar azulejos', price: 15, image: 'cimentocola.webp', estoque: 60, category: 'materiais' },
+    { id: 10, name: 'Chave de Fenda', description: 'Ferramenta manual para apertar parafusos', price: 15, image: 'chavefenda.jpg', estoque: 50, category: 'ferramentas' },
+    { id: 11, name: 'Alicate', description: 'Ferramenta de corte e torção', price: 20, image: 'alicate.jpg', estoque: 40, category: 'ferramentas' },
+    { id: 12, name: 'Martelo', description: 'Ferramenta para martelar pregos e outros objetos', price: 25, image: 'martelo.jpg', estoque: 35, category: 'ferramentas' },
+];
 
-        // Recupera o carrinho do localStorage
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const cartTotal = JSON.parse(localStorage.getItem('cartTotal')) || 0;
+// Categorias
+const categories = ['materiais', 'ferramentas', 'hidraulicas'];
 
-        // Exibe os itens do carrinho no formulário
-        const cartItemsContainer = document.getElementById('cart-items');
+let cart = [];
+let selectedCategory = 'materiais'; // Categoria inicial
+
+// Função para trocar a categoria
+function selectCategory(category) {
+    selectedCategory = category;
+    renderProducts(products.filter(product => product.category === selectedCategory));
+}
+
+// Funções de carrinho, pesquisa e renderização dos produtos
+function addToCart(productId, productName, price) {
+    const product = products.find(item => item.id === productId);
+
+    if (product.estoque <= 0) {
+        alert(`Não há mais estoque de ${productName}`);
+        return;
+    }
+
+    const existingProduct = cart.find(item => item.id === productId);
+
+    if (existingProduct) {
+        existingProduct.quantity++;
+    } else {
+        cart.push({ id: productId, name: productName, price: price, quantity: 1 });
+    }
+
+    product.estoque--;
+    updateCart();
+    renderProducts(products);
+}
+
+function removeFromCart(productId) {
+    const productInCart = cart.find(item => item.id === productId);
+    const product = products.find(item => item.id === productId);
+
+    if (productInCart) {
+        if (productInCart.quantity > 1) {
+            productInCart.quantity--;
+        } else {
+            cart = cart.filter(item => item.id !== productId);
+        }
+
+        product.estoque++;
+        updateCart();
+        renderProducts(products);
+    }
+}
+
+function updateCart() {
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    cartItemsContainer.innerHTML = '';
+
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<li>Nenhum item no carrinho</li>';
+        document.getElementById('checkout-btn').style.display = 'none'; // Esconde o botão se o carrinho estiver vazio
+    } else {
         cart.forEach(item => {
             const cartItemElement = document.createElement('li');
-            cartItemElement.innerHTML = `${item.name} - ${item.quantity}x - R$ ${(item.price * item.quantity).toFixed(2)}`;
+            cartItemElement.innerHTML = `
+                <span>${item.name} ${item.quantity > 1 ? `${item.quantity}x` : ''}</span>
+                <span class="price">R$ ${(item.price * item.quantity).toFixed(2)}</span>
+                <span class="remove-option" onclick="removeFromCart(${item.id})">Remover</span>
+            `;
             cartItemsContainer.appendChild(cartItemElement);
         });
+        document.getElementById('checkout-btn').style.display = 'inline'; // Exibe o botão quando houver itens no carrinho
+    }
 
-        // Exibe o total no final
-        document.getElementById('cart-total').textContent = `Total: R$ ${cartTotal.toFixed(2)}`;
+    const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    cartTotal.textContent = total.toFixed(2);
+}
 
-        const form = document.getElementById('payment-form');
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Previne o comportamento padrão do formulário
+function toggleCart() {
+    const cartContainer = document.getElementById('cart');
+    cartContainer.classList.toggle('open');
+}
 
-            const {token, error} = await stripe.createToken(card); // Cria o token com o Stripe
+function searchProducts() {
+    const query = document.getElementById('search-bar').value.toLowerCase();
+    const filteredProducts = products.filter(product => 
+        product.name.toLowerCase().includes(query) || 
+        product.description.toLowerCase().includes(query)
+    );
+    renderProducts(filteredProducts);
+}
 
-            if (error) {
-                console.error(error); // Em caso de erro, loga no console
-                alert('Erro no pagamento!');
-            } else {
-                const response = await fetch('/pagamento', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        token: token,
-                        amount: cartTotal * 100, // valor em centavos
-                    }),
-                });
+function renderProducts(filteredProducts) {
+    const container = document.getElementById('product-container');
+    container.innerHTML = '';
 
-                const result = await response.json();
-                if (result.success) {
-                    alert('Pagamento realizado com sucesso!');
-                } else {
-                    alert('Erro: ' + result.error);
-                }
-            }
-        });
+    filteredProducts.forEach(product => {
+        let estoqueClass = 'estoque';
 
-        // Função para exibir a opção de pagamento via PIX
-        document.getElementById('pay-pix').addEventListener('click', () => {
-            // Exibe as instruções para pagamento via PIX (chave de e-mail)
-            document.getElementById('pix-info').style.display = 'block';
-            alert("Pagamento via PIX selecionado! Use a chave de e-mail para fazer o pagamento.");
-        });
+        // Aplicando a classe de estoque de acordo com a quantidade disponível
+        if (product.estoque === 0) {
+            estoqueClass += ' esgotado';  // Se o estoque for zero
+        } else if (product.estoque <= 10) {
+            estoqueClass += ' baixo';  // Se o estoque for baixo (10 ou menos)
+        } else if (product.estoque <= 50) {
+            estoqueClass += ' medio';  // Se o estoque for médio (até 50)
+        } else {
+            estoqueClass += ' altos';  // Se o estoque for alto (mais de 50)
+        }
+
+        const productElement = document.createElement('div');
+        productElement.classList.add('product');
+        productElement.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <div class="product-info">
+                <h3>${product.name}</h3>
+                <p>${product.description}</p>
+                <p class="${estoqueClass}">Estoque: ${product.estoque}</p>
+                <p class="price">R$ ${product.price.toFixed(2)}</p>
+                <button class="add-to-cart" onclick="addToCart(${product.id}, '${product.name}', ${product.price})" ${product.estoque <= 0 ? 'disabled' : ''}>Adicionar ao carrinho</button>
+            </div>
+        `;
+        container.appendChild(productElement);
+    });
+}
+
+// Inicializa a renderização dos produtos
+renderProducts(products.filter(product => product.category === selectedCategory));
+
+// Finalizar compra
+function checkout() {
+    if (cart.length === 0) {
+        alert('Seu carrinho está vazio!');
+        return;
+    }
+
+    // Salva os dados do carrinho e total no localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+    const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    localStorage.setItem('cartTotal', total);
+
+    // Redireciona para a página de pagamento
+    window.location.href = 'formpagamento.html';
+}
     </script>
 
 </body>
